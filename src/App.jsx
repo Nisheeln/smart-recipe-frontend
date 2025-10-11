@@ -3,9 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import IngredientInput from "./components/IngredientInput";
 import RecipeGenerator from "./components/RecipeGenerator";
 import IngredientImageUpload from "./components/IngredientImageUpload"; // 👈 Import new component
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import FavoritesPage from "./pages/FavoritesPage";
+import LoginPage from "./Pages/LoginPage";
+import SignupPage from "./Pages/SignupPage";
 import Navbar from "./components/Navbar";
 import "./app.css";
 
@@ -70,12 +69,6 @@ export default function App() {
                 <Navigate to="/login" />
               )
             }
-          />
-
-          {/* Favorites Page */}
-          <Route
-            path="/favorites"
-            element={isLoggedIn ? <FavoritesPage /> : <Navigate to="/login" />}
           />
         </Routes>
       </div>
