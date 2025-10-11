@@ -6,7 +6,7 @@ import IngredientImageUpload from "./components/IngredientImageUpload"; // 👈 
 import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignupPage";
 import Navbar from "./components/Navbar";
-import "./app.css";
+import "./App.css";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("token"));
