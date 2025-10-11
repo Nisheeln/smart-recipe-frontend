@@ -1,0 +1,161 @@
+/* Reset some defaults */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+  color: #333;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+header p {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Ingredient Input */
+.ingredient-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ingredient-input input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+}
+
+.ingredient-input button {
+  padding: 8px 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.ingredient-input button:hover {
+  background: #1d4ed8;
+}
+
+/* Detected Ingredients */
+.detected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.detected-tags button {
+  background: #e0f2fe;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Recipe List */
+.recipe-list {
+  display: grid;
+  gap: 20px;
+}
+
+.recipe-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-card h2 {
+  font-size: 1.3rem;
+  color: #111827;
+}
+
+.recipe-card p {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.recipe-card ol {
+  padding-left: 20px;
+}
+
+.recipe-card .servings {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recipe-card button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.recipe-card button:hover {
+  background: #1d4ed8;
+}
+
+/* Rating Stars */
+.rating-stars {
+  display: flex;
+  gap: 5px;
+  font-size: 1.2rem;
+}
+
+/* Filters */
+.filters {
+  display: grid;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.filters select,
+.filters input {
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ingredient-input {
+    flex-direction: column;
+  }
+}

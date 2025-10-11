@@ -1,0 +1,36 @@
+export const RECIPES = [
+    {
+      id: "r1",
+      title: "Tomato Basil Pasta",
+      ingredients: ["pasta", "tomato", "basil", "garlic", "olive oil", "salt", "pepper"],
+      steps: ["Boil pasta", "Sauté garlic and tomato", "Toss with pasta and basil"],
+      difficulty: "easy",
+      cook_time: 20,
+      cuisine: "Italian",
+      tags: ["vegetarian"],
+      nutrition: { calories: 430, protein: 12 },
+    },
+    {
+      id: "r2",
+      title: "Vegetable Stir Fry",
+      ingredients: ["broccoli", "carrot", "bell pepper", "soy sauce", "garlic", "ginger", "oil"],
+      steps: ["Chop veggies", "Stir-fry with sauce", "Serve with rice"],
+      difficulty: "easy",
+      cook_time: 15,
+      cuisine: "Asian",
+      tags: ["vegetarian", "gluten-free"],
+      nutrition: { calories: 320, protein: 8 },
+    },
+    {
+      id: "r3",
+      title: "Chicken Quesadilla",
+      ingredients: ["chicken", "tortilla", "cheese", "bell pepper", "onion", "salt"],
+      steps: ["Cook chicken", "Assemble quesadilla", "Griddle until golden"],
+      difficulty: "easy",
+      cook_time: 25,
+      cuisine: "Mexican",
+      tags: ["non-vegetarian"],
+      nutrition: { calories: 560, protein: 36 },
+    },
+  ];
+  
