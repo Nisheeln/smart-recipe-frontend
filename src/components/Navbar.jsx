@@ -1,6 +1,5 @@
 import React from "react";
-import { Stack, Button, Card } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Stack, Button, Card, Typography } from "@mui/material";
 
 export default function Navbar({ handleLogout }) {
   return (
@@ -19,24 +18,12 @@ export default function Navbar({ handleLogout }) {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Stack direction="row" spacing={2}>
-          <Button
-            component={Link}
-            to="/"
-            variant="contained"
-            color="primary"
-          >
-            Home
-          </Button>
-          <Button
-            component={Link}
-            to="/favorites"
-            variant="contained"
-            color="success"
-          >
-            Favorites
-          </Button>
-        </Stack>
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: "bold", color: "#1976d2" }}
+        >
+          Smart Recipe
+        </Typography>
 
         <Button
           onClick={handleLogout}

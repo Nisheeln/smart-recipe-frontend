@@ -11,6 +11,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function IngredientImageUpload({ onAddIngredient }) {
   const [image, setImage] = useState(null);
@@ -36,7 +37,7 @@ export default function IngredientImageUpload({ onAddIngredient }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/detect-ingredient",
+        `${backendUrl}/api/detect-Ingredient`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
