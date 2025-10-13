@@ -5,7 +5,7 @@ import RecipeGenerator from "./components/RecipeGenerator";
 import IngredientImageUpload from "./components/IngredientImageUpload";
 import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignupPage";
-import FavoritesPage from "./pages/FavoritesPage";
+import FavoritesPage from "./Pages/FavoritesPage";
 import Navbar from "./components/Navbar";
 import "./App.css";
 
