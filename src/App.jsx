@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import IngredientInput from "./components/IngredientInput";
 import RecipeGenerator from "./components/RecipeGenerator";
 import IngredientImageUpload from "./components/IngredientImageUpload";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+import LoginPage from "./Pages/LoginPage";
+import SignupPage from "./Pages/SignupPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import Navbar from "./components/Navbar";
 import "./App.css";
