@@ -1,32 +1,38 @@
 import React from "react";
 import AuthForm from "../components/AuthForm";
 import { useNavigate } from "react-router-dom";
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
-
 
 export default function SignupPage({ setIsLoggedIn }) {
   const navigate = useNavigate();
 
   const handleSignup = async (data) => {
     try {
-      const res = await fetch(`${backendUrl}/api/auth/signUp`, {
+      const res = await fetch(`${backendUrl}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
       const result = await res.json();
+
       if (!res.ok) {
         alert(result.error || "Signup failed");
         return;
       }
 
+      // Show success message
+      alert(result.message || "User created successfully");
+
+      // Store token and update login state
       localStorage.setItem("token", result.token);
-      setIsLoggedIn(true); // update login state
-      navigate("/"); // redirect to main page
+      setIsLoggedIn(true);
+
+      // Redirect to main page
+      navigate("/");
     } catch (err) {
-      console.error("Error connecting to backend:", err);
+      console.error("Error during signup:", err);
       alert("Error connecting to backend");
     }
   };
