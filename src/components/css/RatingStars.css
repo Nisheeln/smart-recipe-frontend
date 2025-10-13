@@ -1,0 +1,22 @@
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.star-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.star-button.active {
+  color: #FFD700; /* gold */
+}
+
+.star-button:hover {
+  transform: scale(1.1);
+}

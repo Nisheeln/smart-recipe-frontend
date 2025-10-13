@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, Container, CircularProgress, Box, Button } from "@mui/material";
+import { Typography, Container, CircularProgress, Box, Button, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import RecipeCard from "../components/RecipeCard";
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export default function FavoritesPage() {
@@ -30,7 +31,6 @@ export default function FavoritesPage() {
       if (!res.ok) throw new Error("Failed to fetch favorites");
 
       const result = await res.json();
-      // Filter out any invalid or empty recipes
       const validFavorites = (result.favorites || []).filter(
         (recipe) => recipe && recipe.title
       );
@@ -55,7 +55,6 @@ export default function FavoritesPage() {
 
       if (res.ok) {
         setFavorites(favorites.filter((fav) => fav.title !== title));
-        alert("Recipe removed from favorites");
       } else {
         alert("Failed to remove recipe");
       }
@@ -68,6 +67,34 @@ export default function FavoritesPage() {
   const handleToggleFavorite = (title, isFavorited) => {
     if (!isFavorited) {
       setFavorites(favorites.filter((fav) => fav.title !== title));
+    }
+  };
+
+  const handleRateRecipe = async (title, newRating) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${backendUrl}/api/favorites/rate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title, rating: newRating }),
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        setFavorites((prevFavorites) =>
+          prevFavorites.map((fav) =>
+            fav.title === title ? { ...fav, rating: newRating } : fav
+          )
+        );
+      } else {
+        alert(result.error || "Failed to update rating");
+      }
+    } catch (err) {
+      console.error("Error updating rating:", err);
+      alert("Error updating rating");
     }
   };
 
@@ -104,19 +131,19 @@ export default function FavoritesPage() {
           </Button>
         </Box>
       ) : (
-        <Grid container spacing={3}>
+        <Stack spacing={3}>
           {favorites.map((recipe) => (
-            <Grid item xs={12} sm={6} md={4} key={recipe.title}>
-              <RecipeCard
-                recipe={recipe}
-                isFavorited={true}
-                onToggleFavorite={handleToggleFavorite}
-                onRemove={handleRemoveFavorite}
-                sx={{ height: "100%" }} // ensures uniform card height
-              />
-            </Grid>
+            <RecipeCard
+              key={recipe.title}
+              recipe={recipe}
+              isFavorited={true}
+              onToggleFavorite={handleToggleFavorite}
+              onRemove={handleRemoveFavorite}
+              showRating={true} // ✅ Only show rating in Favorites page
+              onRate={handleRateRecipe}
+            />
           ))}
-        </Grid>
+        </Stack>
       )}
     </Container>
   );

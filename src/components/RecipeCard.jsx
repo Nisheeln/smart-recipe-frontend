@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, Typography, Stack, Chip, Divider, Button } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import RatingStars from "./RatingStars";
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-export default function RecipeCard({ recipe, onRemove, isFavorited, onToggleFavorite }) {
+export default function RecipeCard({
+  recipe,
+  onRemove,
+  isFavorited,
+  onToggleFavorite,
+  showRating = false, // ✅ new prop
+}) {
   if (!recipe) return null;
 
   const { title, cuisine, difficulty, cook_time, ingredients, steps, nutrition } = recipe;
+
+  const [rating, setRating] = useState(recipe.rating || 0);
+
+  useEffect(() => {
+    setRating(recipe.rating || 0);
+  }, [recipe]);
 
   const handleAddFavorite = async () => {
     try {
@@ -20,13 +34,9 @@ export default function RecipeCard({ recipe, onRemove, isFavorited, onToggleFavo
         },
         body: JSON.stringify({ recipe }),
       });
-
       const result = await res.json();
-      if (res.ok) {
-        onToggleFavorite(title, true);
-      } else {
-        alert(result.error || "Failed to add favorite");
-      }
+      if (res.ok) onToggleFavorite(title, true);
+      else alert(result.error || "Failed to add favorite");
     } catch (err) {
       console.error("Error adding favorite:", err);
       alert("Error adding to favorites");
@@ -38,20 +48,34 @@ export default function RecipeCard({ recipe, onRemove, isFavorited, onToggleFavo
       const token = localStorage.getItem("token");
       const res = await fetch(`${backendUrl}/api/favorites/remove/${title}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
       const result = await res.json();
-      if (res.ok) {
-        onToggleFavorite(title, false);
-      } else {
-        alert(result.error || "Failed to remove favorite");
-      }
+      if (res.ok) onToggleFavorite(title, false);
+      else alert(result.error || "Failed to remove favorite");
     } catch (err) {
       console.error("Error removing favorite:", err);
       alert("Error removing from favorites");
+    }
+  };
+
+  const handleRate = async (newRating) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${backendUrl}/api/favorites/rate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ title, rating: newRating }),
+      });
+      const result = await res.json();
+      if (res.ok) setRating(newRating);
+      else alert(result.error || "Failed to update rating");
+    } catch (err) {
+      console.error("Error updating rating:", err);
+      alert("Error updating rating");
     }
   };
 
@@ -79,7 +103,7 @@ export default function RecipeCard({ recipe, onRemove, isFavorited, onToggleFavo
           {cook_time != null && <Chip label={`${cook_time} mins`} color="info" />}
         </Stack>
 
-        {ingredients && ingredients.length > 0 && (
+        {ingredients?.length > 0 && (
           <>
             <Typography variant="h6" fontWeight="medium" sx={{ mt: 1 }}>
               Ingredients:
@@ -92,7 +116,7 @@ export default function RecipeCard({ recipe, onRemove, isFavorited, onToggleFavo
           </>
         )}
 
-        {steps && steps.length > 0 && (
+        {steps?.length > 0 && (
           <>
             <Typography variant="h6" fontWeight="medium" sx={{ mt: 2 }}>
               Steps:
@@ -118,6 +142,14 @@ export default function RecipeCard({ recipe, onRemove, isFavorited, onToggleFavo
               {nutrition.protein != null && <Chip label={`Protein: ${nutrition.protein}g`} />}
             </Stack>
           </>
+        )}
+
+        {/* ✅ Only show rating if showRating is true */}
+        {showRating && (
+          <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2 }}>
+            <Typography variant="body1">Rate:</Typography>
+            <RatingStars value={rating} onChange={handleRate} />
+          </Stack>
         )}
       </CardContent>
 

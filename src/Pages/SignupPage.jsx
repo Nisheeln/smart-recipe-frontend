@@ -22,8 +22,7 @@ export default function SignupPage({ setIsLoggedIn }) {
         return;
       }
 
-      // Show success message
-      alert(result.message || "User created successfully");
+      
 
       // Store token and update login state
       localStorage.setItem("token", result.token);
