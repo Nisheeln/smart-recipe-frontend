@@ -30,7 +30,11 @@ export default function FavoritesPage() {
       if (!res.ok) throw new Error("Failed to fetch favorites");
 
       const result = await res.json();
-      setFavorites(result.favorites || []);
+      // Filter out any invalid or empty recipes
+      const validFavorites = (result.favorites || []).filter(
+        (recipe) => recipe && recipe.title
+      );
+      setFavorites(validFavorites);
     } catch (err) {
       console.error("Error fetching favorites:", err);
       alert("Failed to load favorites");
@@ -50,7 +54,7 @@ export default function FavoritesPage() {
       });
 
       if (res.ok) {
-        setFavorites(favorites.filter(fav => fav.title !== title));
+        setFavorites(favorites.filter((fav) => fav.title !== title));
         alert("Recipe removed from favorites");
       } else {
         alert("Failed to remove recipe");
@@ -63,14 +67,21 @@ export default function FavoritesPage() {
 
   const handleToggleFavorite = (title, isFavorited) => {
     if (!isFavorited) {
-      setFavorites(favorites.filter(fav => fav.title !== title));
+      setFavorites(favorites.filter((fav) => fav.title !== title));
     }
   };
 
   if (loading) {
     return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "400px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "400px",
+          }}
+        >
           <CircularProgress />
         </Box>
       </Container>
@@ -88,23 +99,20 @@ export default function FavoritesPage() {
           <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
             You haven't added any favorites yet!
           </Typography>
-          <Button
-            variant="contained"
-            onClick={() => navigate("/")}
-            sx={{ mt: 2 }}
-          >
+          <Button variant="contained" onClick={() => navigate("/")} sx={{ mt: 2 }}>
             Browse Recipes
           </Button>
         </Box>
       ) : (
         <Grid container spacing={3}>
           {favorites.map((recipe) => (
-            <Grid key={recipe.title}>
+            <Grid item xs={12} sm={6} md={4} key={recipe.title}>
               <RecipeCard
                 recipe={recipe}
                 isFavorited={true}
                 onToggleFavorite={handleToggleFavorite}
                 onRemove={handleRemoveFavorite}
+                sx={{ height: "100%" }} // ensures uniform card height
               />
             </Grid>
           ))}
