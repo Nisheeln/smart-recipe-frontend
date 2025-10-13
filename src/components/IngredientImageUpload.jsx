@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import {
   Card,
@@ -11,13 +11,20 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-export default function IngredientImageUpload({ onAddIngredient }) {
+export default function IngredientImageUpload({ onAddIngredient, isPhoneUser }) {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
   const [detectedIngredients, setDetectedIngredients] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState({});
+
+  // Camera state
+  const [cameraActive, setCameraActive] = useState(false);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -37,7 +44,7 @@ export default function IngredientImageUpload({ onAddIngredient }) {
 
     try {
       const response = await axios.post(
-        `${backendUrl}/api/detect-Ingredient`,
+        `${backendUrl}/api/detect-ingredient`, // fixed capitalization
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -48,17 +55,13 @@ export default function IngredientImageUpload({ onAddIngredient }) {
         return;
       }
 
-      // Filter ingredients with confidence >= 70%
-      const highConfidence = ingredients.filter((i) => i.confidence >= 0.7);
-
-      // Remove duplicate ingredient names
+      const highConfidence = ingredients.filter((i) => i.confidence >= 70); // confidence >= 70%
       const uniqueIngredients = [
         ...new Map(highConfidence.map((i) => [i.name, i])).values(),
       ];
 
       setDetectedIngredients(uniqueIngredients);
 
-      // Initialize selected state
       const initSelected = {};
       uniqueIngredients.forEach((i) => (initSelected[i.name] = true));
       setSelectedIngredients(initSelected);
@@ -79,11 +82,8 @@ export default function IngredientImageUpload({ onAddIngredient }) {
     const selected = Object.keys(selectedIngredients).filter(
       (name) => selectedIngredients[name]
     );
-    onAddIngredient(selected); // Pass array of selected ingredients
-    setImage(null);
-    setPreview("");
-    setDetectedIngredients([]);
-    setSelectedIngredients({});
+    onAddIngredient(selected);
+    handleReset();
   };
 
   const handleReset = () => {
@@ -91,13 +91,59 @@ export default function IngredientImageUpload({ onAddIngredient }) {
     setPreview("");
     setDetectedIngredients([]);
     setSelectedIngredients({});
+    stopCamera();
   };
+
+  // ----------------- Camera Functions -----------------
+  const startCamera = async () => {
+    setCameraActive(true);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+      videoRef.current.play();
+    } catch (err) {
+      console.error("Error accessing camera:", err);
+      alert("Cannot access camera.");
+    }
+  };
+
+  const stopCamera = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const tracks = videoRef.current.srcObject.getTracks();
+      tracks.forEach((track) => track.stop());
+      videoRef.current.srcObject = null;
+    }
+    setCameraActive(false);
+  };
+
+  const takePhoto = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob((blob) => {
+      const file = new File([blob], "photo.jpg", { type: "image/jpeg" });
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+      setDetectedIngredients([]);
+      setSelectedIngredients({});
+      stopCamera();
+    }, "image/jpeg");
+  };
+
+  // ------------------------------------------------------
 
   return (
     <Card sx={{ mb: 4, borderRadius: 3, boxShadow: 6, background: "#f0f4f8" }}>
       <CardHeader title="Upload Ingredient Image" sx={{ color: "#1e3a8a" }} />
       <CardContent>
         <Stack spacing={2} alignItems="center">
+          {/* Upload Image */}
           <Button
             variant="contained"
             component="label"
@@ -112,6 +158,38 @@ export default function IngredientImageUpload({ onAddIngredient }) {
             />
           </Button>
 
+          {/* Take Photo for phone users */}
+          {isPhoneUser && !cameraActive && (
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<CameraAltIcon />}
+              onClick={startCamera}
+            >
+              Take Photo
+            </Button>
+          )}
+
+          {cameraActive && (
+            <Stack spacing={1} alignItems="center">
+              <video
+                ref={videoRef}
+                width="300"
+                style={{ borderRadius: 8 }}
+                autoPlay
+              ></video>
+              <Stack direction="row" spacing={2}>
+                <Button variant="contained" color="success" onClick={takePhoto}>
+                  Capture
+                </Button>
+                <Button variant="contained" color="error" onClick={stopCamera}>
+                  Cancel
+                </Button>
+              </Stack>
+            </Stack>
+          )}
+
+          {/* Image Preview */}
           {preview && (
             <img
               src={preview}
@@ -135,7 +213,7 @@ export default function IngredientImageUpload({ onAddIngredient }) {
               <Typography variant="h6">Select Ingredients:</Typography>
               {detectedIngredients.map((ingredient, index) => (
                 <FormControlLabel
-                  key={`${ingredient.name}-${index}`} // unique key
+                  key={`${ingredient.name}-${index}`}
                   control={
                     <Checkbox
                       checked={selectedIngredients[ingredient.name]}
@@ -162,6 +240,8 @@ export default function IngredientImageUpload({ onAddIngredient }) {
               </Stack>
             </Stack>
           )}
+
+          <canvas ref={canvasRef} style={{ display: "none" }} />
         </Stack>
       </CardContent>
     </Card>
