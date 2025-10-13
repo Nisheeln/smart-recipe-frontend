@@ -1,7 +1,10 @@
 import React from "react";
 import { Stack, Button, Card, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar({ handleLogout }) {
+  const navigate = useNavigate();
+
   return (
     <Card
       sx={{
@@ -25,13 +28,34 @@ export default function Navbar({ handleLogout }) {
           Smart Recipe
         </Typography>
 
-        <Button
-          onClick={handleLogout}
-          variant="contained"
-          color="error"
-        >
-          Logout
-        </Button>
+        <Stack direction="row" spacing={1}>
+          {/* Home Button */}
+          <Button
+            onClick={() => navigate("/")}
+            variant="contained"
+            color="secondary"
+          >
+            Home
+          </Button>
+
+          {/* Favorites Button */}
+          <Button
+            onClick={() => navigate("/favorites")}
+            variant="contained"
+            color="primary"
+          >
+            Favorites
+          </Button>
+
+          {/* Logout Button */}
+          <Button
+            onClick={handleLogout}
+            variant="contained"
+            color="error"
+          >
+            Logout
+          </Button>
+        </Stack>
       </Stack>
     </Card>
   );

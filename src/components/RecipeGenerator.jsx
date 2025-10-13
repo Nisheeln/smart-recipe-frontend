@@ -1,5 +1,4 @@
-// RecipeGenerator.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
 import {
   Button,
@@ -13,11 +12,10 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-
-
 export default function RecipeGenerator({ ingredients, difficulty, time, diet }) {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [favorites, setFavorites] = useState([]);
 
   const generateRecipes = async () => {
     if (ingredients.length === 0) {
@@ -47,6 +45,16 @@ export default function RecipeGenerator({ ingredients, difficulty, time, diet })
     }
 
     setLoading(false);
+  };
+
+  // Toggle favorite in state
+  const handleToggleFavorite = (title, add) => {
+    if (add) {
+      const recipeToAdd = recipes.find(r => r.title === title);
+      if (recipeToAdd) setFavorites(prev => [...prev, recipeToAdd]);
+    } else {
+      setFavorites(prev => prev.filter(r => r.title !== title));
+    }
   };
 
   return (
@@ -90,7 +98,12 @@ export default function RecipeGenerator({ ingredients, difficulty, time, diet })
           {/* Recipes List */}
           <Stack spacing={3} sx={{ width: "100%", mt: 3 }}>
             {recipes.map((recipe, idx) => (
-              <RecipeCard key={idx} recipe={recipe} />
+              <RecipeCard
+                key={idx}
+                recipe={recipe}
+                isFavorited={favorites.some(fav => fav.title === recipe.title)}
+                onToggleFavorite={handleToggleFavorite} // pass the function here
+              />
             ))}
           </Stack>
         </Stack>

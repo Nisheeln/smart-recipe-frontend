@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import IngredientInput from "./components/IngredientInput";
 import RecipeGenerator from "./components/RecipeGenerator";
-import IngredientImageUpload from "./components/IngredientImageUpload"; // 👈 Import new component
-import LoginPage from "./Pages/LoginPage";
-import SignupPage from "./Pages/SignupPage";
+import IngredientImageUpload from "./components/IngredientImageUpload";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import FavoritesPage from "./pages/FavoritesPage";
 import Navbar from "./components/Navbar";
 import "./App.css";
 
@@ -42,7 +43,6 @@ export default function App() {
             element={
               isLoggedIn ? (
                 <>
-                  {/* 👇 Add this new upload component above IngredientInput */}
                   <IngredientImageUpload
                     onAddIngredient={(ing) => setIngredients((prev) => [...prev, ing])}
                   />
@@ -65,6 +65,18 @@ export default function App() {
                     diet={diet}
                   />
                 </>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+
+          {/* Favorites Page */}
+          <Route
+            path="/favorites"
+            element={
+              isLoggedIn ? (
+                <FavoritesPage setIsLoggedIn={setIsLoggedIn} />
               ) : (
                 <Navigate to="/login" />
               )
