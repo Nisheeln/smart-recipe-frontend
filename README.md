@@ -67,8 +67,6 @@ Feature	Screenshot
 
 ⭐ Favorites Page	| ![Favorites](favorites.png) |
 
-📱 Mobile View	| ![Mobile_view](mobile.jpeg) |
-
 (Replace placeholders with actual screenshots.)
 
 🛠️ Setup Instructions
