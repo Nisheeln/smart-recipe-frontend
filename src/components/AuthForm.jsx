@@ -30,9 +30,9 @@ export default function AuthForm({ mode = "login", onSubmit, switchTo }) {
   return (
     <Card
       sx={{
-        width: { xs: "90%", sm: 400 }, // 90% width on mobile, fixed 400px on tablet+
+        width: { xs: "90%", sm: 400 },
         mx: "auto",
-        mt: { xs: 6, sm: 10 }, // smaller top margin on mobile
+        mt: { xs: 6, sm: 10 },
         borderRadius: 3,
         boxShadow: 6,
       }}

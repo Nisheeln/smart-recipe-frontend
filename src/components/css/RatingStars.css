@@ -14,7 +14,7 @@
 }
 
 .star-button.active {
-  color: #FFD700; /* gold */
+  color: #FFD700; 
 }
 
 .star-button:hover {

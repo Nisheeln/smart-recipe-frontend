@@ -24,11 +24,11 @@ export default function SignupPage({ setIsLoggedIn }) {
 
       
 
-      // Store token and update login state
+      
       localStorage.setItem("token", result.token);
       setIsLoggedIn(true);
 
-      // Redirect to main page
+      
       navigate("/");
     } catch (err) {
       console.error("Error during signup:", err);

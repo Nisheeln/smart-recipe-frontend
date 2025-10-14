@@ -31,7 +31,7 @@ export default function IngredientInput({
       <CardHeader title="Ingredients Input" sx={{ color: "#1e3a8a" }} />
       <CardContent>
         <Stack spacing={2}>
-          {/* Manual Input */}
+          
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <TextField
               fullWidth
@@ -50,7 +50,7 @@ export default function IngredientInput({
             </Button>
           </Stack>
 
-          {/* Ingredient Chips */}
+          
           <Stack direction="row" spacing={1} flexWrap="wrap">
             {ingredients.map((ing, idx) => (
               <Chip
@@ -64,7 +64,7 @@ export default function IngredientInput({
             ))}
           </Stack>
 
-          {/* Filters */}
+          
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <TextField
               select

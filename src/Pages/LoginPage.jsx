@@ -23,8 +23,8 @@ export default function LoginPage({ setIsLoggedIn }) {
       }
 
       localStorage.setItem("token", result.token);
-      setIsLoggedIn(true); // update login state
-      navigate("/"); // redirect to main page
+      setIsLoggedIn(true);
+      navigate("/");
     } catch (err) {
       console.error("Error connecting to backend:", err);
       alert("Error connecting to backend");

@@ -44,7 +44,7 @@ export default function IngredientImageUpload({ onAddIngredient, isPhoneUser }) 
 
     try {
       const response = await axios.post(
-        `${backendUrl}/api/detect-ingredient`, // fixed capitalization
+        `${backendUrl}/api/detect-ingredient`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -55,7 +55,7 @@ export default function IngredientImageUpload({ onAddIngredient, isPhoneUser }) 
         return;
       }
 
-      const highConfidence = ingredients.filter((i) => i.confidence >= 70); // confidence >= 70%
+      const highConfidence = ingredients.filter((i) => i.confidence >= 70);
       const uniqueIngredients = [
         ...new Map(highConfidence.map((i) => [i.name, i])).values(),
       ];
@@ -94,7 +94,7 @@ export default function IngredientImageUpload({ onAddIngredient, isPhoneUser }) 
     stopCamera();
   };
 
-  // ----------------- Camera Functions -----------------
+ 
   const startCamera = async () => {
     setCameraActive(true);
     try {
@@ -136,14 +136,14 @@ export default function IngredientImageUpload({ onAddIngredient, isPhoneUser }) 
     }, "image/jpeg");
   };
 
-  // ------------------------------------------------------
+
 
   return (
     <Card sx={{ mb: 4, borderRadius: 3, boxShadow: 6, background: "#f0f4f8" }}>
       <CardHeader title="Upload Ingredient Image" sx={{ color: "#1e3a8a" }} />
       <CardContent>
         <Stack spacing={2} alignItems="center">
-          {/* Upload Image */}
+          
           <Button
             variant="contained"
             component="label"
@@ -158,7 +158,7 @@ export default function IngredientImageUpload({ onAddIngredient, isPhoneUser }) 
             />
           </Button>
 
-          {/* Take Photo for phone users */}
+          
           {isPhoneUser && !cameraActive && (
             <Button
               variant="contained"
@@ -189,7 +189,7 @@ export default function IngredientImageUpload({ onAddIngredient, isPhoneUser }) 
             </Stack>
           )}
 
-          {/* Image Preview */}
+          
           {preview && (
             <img
               src={preview}

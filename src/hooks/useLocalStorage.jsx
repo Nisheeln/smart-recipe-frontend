@@ -8,7 +8,7 @@ export function useLocalStorage(key, initialValue) {
       const raw = window.localStorage.getItem(key);
       if (raw != null) setValue(JSON.parse(raw));
     } catch {
-      // ignore read errors
+      
     }
   }, [key]);
 
@@ -16,7 +16,7 @@ export function useLocalStorage(key, initialValue) {
     try {
       window.localStorage.setItem(key, JSON.stringify(value));
     } catch {
-      // ignore write errors
+      
     }
   }, [key, value]);
 

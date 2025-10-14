@@ -3,7 +3,7 @@ import IngredientInput from "./IngredientInput";
 import RecipeList from "./RecipeList";
 import { Container, Paper, Typography, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 
-// Custom theme for the app
+
 const theme = createTheme({
   palette: {
     primary: { main: "#2563eb" },

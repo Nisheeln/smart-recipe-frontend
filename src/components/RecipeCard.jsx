@@ -11,7 +11,7 @@ export default function RecipeCard({
   onRemove,
   isFavorited,
   onToggleFavorite,
-  showRating = false, // ✅ new prop
+  showRating = false,
 }) {
   if (!recipe) return null;
 
@@ -144,7 +144,7 @@ export default function RecipeCard({
           </>
         )}
 
-        {/* ✅ Only show rating if showRating is true */}
+        
         {showRating && (
           <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2 }}>
             <Typography variant="body1">Rate:</Typography>

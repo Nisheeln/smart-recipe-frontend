@@ -29,7 +29,7 @@ export default function Navbar({ handleLogout }) {
         </Typography>
 
         <Stack direction="row" spacing={1}>
-          {/* Home Button */}
+          
           <Button
             onClick={() => navigate("/")}
             variant="contained"
@@ -38,7 +38,7 @@ export default function Navbar({ handleLogout }) {
             Home
           </Button>
 
-          {/* Favorites Button */}
+          
           <Button
             onClick={() => navigate("/favorites")}
             variant="contained"
@@ -47,7 +47,7 @@ export default function Navbar({ handleLogout }) {
             Favorites
           </Button>
 
-          {/* Logout Button */}
+          
           <Button
             onClick={handleLogout}
             variant="contained"

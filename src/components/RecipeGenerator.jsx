@@ -47,7 +47,7 @@ export default function RecipeGenerator({ ingredients, difficulty, time, diet })
     setLoading(false);
   };
 
-  // Toggle favorite in state
+  
   const handleToggleFavorite = (title, add) => {
     if (add) {
       const recipeToAdd = recipes.find((r) => r.title === title);
@@ -70,7 +70,7 @@ export default function RecipeGenerator({ ingredients, difficulty, time, diet })
             </Stack>
           )}
 
-          {/* Generate Recipes Button */}
+          
           <Button
             variant="contained"
             startIcon={<PlayArrowIcon />}
@@ -89,21 +89,21 @@ export default function RecipeGenerator({ ingredients, difficulty, time, diet })
             {loading ? <CircularProgress size={24} color="inherit" /> : "Generate Recipes"}
           </Button>
 
-          {/* Loading Message */}
+          
           {loading && (
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
               Getting Recipe From OpenAI, please wait...
             </Typography>
           )}
 
-          {/* Message when no recipes */}
+          
           {recipes.length === 0 && !loading && (
             <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
               Add ingredients and click "Generate Recipes" to see results.
             </Typography>
           )}
 
-          {/* Recipes List */}
+          
           <Stack spacing={3} sx={{ width: "100%", mt: 3 }}>
             {recipes.map((recipe, idx) => (
               <RecipeCard
