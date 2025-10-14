@@ -61,13 +61,13 @@ Backend: Render
 
 📸 Preview
 Feature	Screenshot
-🏠 Home Page (Ingredient Input)	 | ![Home Page](images/homepage.png) |
+🏠 Home Page (Ingredient Input)	 | ![Home Page](homepage.png) |
 
-🍳 Recipe Results Page	| ![Recipes](images/recipe.png) |
+🍳 Recipe Results Page	| ![Recipes](recipe.png) |
 
-⭐ Favorites Page	| ![Favorites](images/favorites.png) |
+⭐ Favorites Page	| ![Favorites](favorites.png) |
 
-📱 Mobile View	| ![Mobile_view](images/mobile.png) |
+📱 Mobile View	| ![Mobile_view](mobile.jpeg) |
 
 (Replace placeholders with actual screenshots.)
 
