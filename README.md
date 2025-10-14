@@ -8,56 +8,56 @@ The Smart Recipe Generator is a full-stack web application that suggests persona
 
 🖥️ Tech Overview
 
-Frontend: React.js (deployed on Vercel)
+  Frontend: React.js (deployed on Vercel)
 
-Backend: Node.js + Express (deployed on Render)
+  Backend: Node.js + Express (deployed on Render)
 
-Database: MongoDB Atlas (for favorites, ratings, and user data)
+  Database: MongoDB Atlas (for favorites, ratings, and user data)
 
 AI Services:
 
-OpenAI API — for recipe generation and nutrition details
+  OpenAI API — for recipe generation and nutrition details
 
-Google Vision API — for image-based ingredient recognition
+  Google Vision API — for image-based ingredient recognition
 
-UI Library: Material UI for a clean, responsive, and user-friendly interface
+  UI Library: Material UI for a clean, responsive, and user-friendly interface
 
 🌟 Key Features
 
-🧠 Ingredient recognition from text or uploaded images (Google Vision API)
+  🧠 Ingredient recognition from text or uploaded images (Google Vision API)
 
-🍽️ AI-generated recipes with nutritional info and substitutions (OpenAI API)
+  🍽️ AI-generated recipes with nutritional info and substitutions (OpenAI API)
 
-⚙️ Filters for difficulty, cooking time, and dietary preferences
+  ⚙️ Filters for difficulty, cooking time, and dietary preferences
 
-⭐ Favorites page to save and rate recipes
+  ⭐ Favorites page to save and rate recipes
 
-⏳ Loading states and error handling for improved UX
+  ⏳ Loading states and error handling for improved UX
 
-📱 Mobile-responsive design for seamless device compatibility
+  📱 Mobile-responsive design for seamless device compatibility
 
 🧩 Approach
 
-Ingredient Input: Users can type ingredients or upload an image.
+  Ingredient Input: Users can type ingredients or upload an image.
 
-Image Processing: The Google Vision API extracts and classifies ingredients.
+  Image Processing: The Google Vision API extracts and classifies ingredients.
 
-AI Integration: The OpenAI API generates personalized recipes, nutritional details, and substitutions.
+  AI Integration: The OpenAI API generates personalized recipes, nutritional details, and substitutions.
 
-Recipe Display: Recipes are shown dynamically, filtered by diet, time, or difficulty.
+  Recipe Display: Recipes are shown dynamically, filtered by diet, time, or difficulty.
 
-Data Persistence: User favorites and ratings are stored in MongoDB Atlas for future access.
+  Data Persistence: User favorites and ratings are stored in MongoDB Atlas for future access.
 
 ⚙️ Architecture
 
-The frontend communicates with the hosted backend API, which handles user requests, processes images and ingredients, and interacts with OpenAI and Google Vision APIs.
-This design ensures scalability, modularity, and smooth real-time performance.
+  The frontend communicates with the hosted backend API, which handles user requests, processes images and ingredients, and interacts with OpenAI and Google Vision APIs.
+  This design ensures scalability, modularity, and smooth real-time performance.
 
 Deployment:
 
-Frontend: Vercel
+  Frontend: Vercel
 
-Backend: Render
+  Backend: Render
 
 📸 Preview
 Feature	Screenshot
